@@ -11,7 +11,6 @@ import MapKit
 
 protocol ExploreViewable {
     var stores: Box<[Store]> { get }
-//    var location: Box<Location> { get }
     func fetchData()
 }
 
@@ -21,7 +20,6 @@ class ExploreViewModel: ExploreViewable {
     private let locationViewModel: LocationViewable = LocationViewModel()
     
     var stores: Box<[Store]> = Box([])
-    //var location: Box<Location> = Box(Location(lat: 37.42274, lng: -122.139956))
     
     init() {
         locationViewModel
@@ -36,7 +34,7 @@ class ExploreViewModel: ExploreViewable {
         fetchData(for: location)
     }
     
-    func fetchData(for location: Location) {
+    private func fetchData(for location: Location) {
         storeSearchService.location.value = location
         getStoreSearchData(from: storeSearchService)
     }

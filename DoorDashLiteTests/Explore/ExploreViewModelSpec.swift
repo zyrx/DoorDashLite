@@ -13,14 +13,15 @@ import Nimble
 
 class ExploreViewModelSpec: QuickSpec {
     override func spec() {
-        var subject: ExploreViewModelSpec!
+        var subject: ExploreViewModel!
+        var mockStoreSearchService: MockStoreSearchService!
         
         describe("ExploreViewModelSpec") {
             beforeEach {
-                
+                subject = ExploreViewModel()
             }
             
-            context("") {
+            context("when fetching stores") {
                 beforeEach {
                     
                 }
@@ -31,4 +32,18 @@ class ExploreViewModelSpec: QuickSpec {
             }
         }
     }
+}
+
+class MockStoreSearchService: Gettable {
+
+    let endpoint = "https://api.doordash.com/v1/store_search/?lat=%.06f&lng=%.06f"
+    var location: Box<Location> = Box(Location(lat: 37.42274, lng: -122.139956))
+    
+    var getCalled: Bool = false
+    
+    func get(_ completion: @escaping (Result<[Store]>) -> Void) {
+        getCalled = true
+    
+    }
+    
 }

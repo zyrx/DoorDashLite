@@ -18,13 +18,7 @@ extension UIStoryboard {
 class ExploreViewController: UIViewController {
     
     let tableView = UITableView()
-    let viewModel: ExploreViewable & LocationViewable = ExploreViewModel()
-    
-//    required init(exploreViewModel: ExploreViewable = ExploreViewModel()) {
-//        self.exploreViewModel = exploreViewModel
-//        super.init(nibName: nil, bundle: nil)
-//        hidesBottomBarWhenPushed = true
-//    }
+    var exploreViewModel: ExploreViewable & LocationViewable = ExploreViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +26,8 @@ class ExploreViewController: UIViewController {
         tableView.register(ExploreTableViewCell.self)
         tableView.dataSource = self
         tableView.delegate = self
-        viewModel.fetchData()
-        viewModel.stores.bind {[weak self] stores in
+        exploreViewModel.fetchData()
+        exploreViewModel.stores.bind {[weak self] stores in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
@@ -43,8 +37,8 @@ class ExploreViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if viewModel.stores.value.count <= 0 {
-            viewModel.fetchData()
+        if exploreViewModel.stores.value.count <= 0 {
+            exploreViewModel.fetchData()
         }
     }
     
@@ -71,19 +65,19 @@ class ExploreViewController: UIViewController {
 // MARK:- LocationViewControllerDelegate
 extension ExploreViewController: LocationViewControllerDelegate {
     func didChangeSelectedLocation(with location: Location) {
-        viewModel.selectedLocation.value = location
+        exploreViewModel.selectedLocation.value = location
     }
 }
 
 // MARK:- UITableViewDataSource
 extension ExploreViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.stores.value.count
+        return exploreViewModel.stores.value.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath) as ExploreTableViewCell
-        cell.configure(with: viewModel.stores.value[indexPath.row])
+        cell.configure(with: exploreViewModel.stores.value[indexPath.row])
         return cell
     }
 }

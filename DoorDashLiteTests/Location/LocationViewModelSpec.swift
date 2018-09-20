@@ -13,7 +13,7 @@ import Nimble
 
 class LocationViewModelSpec: QuickSpec {
     override func spec() {
-        var subject: LocationViewModelSpec!
+        var subject: LocationViewModel!
         
         describe("LocationViewModelSpec") {
             beforeEach {

@@ -13,7 +13,7 @@ import Nimble
 
 class ExploreTableViewCellSpec: QuickSpec {
     override func spec() {
-        var subject: ExploreTableViewCellSpec!
+        var subject: ExploreTableViewCell!
         
         describe("ExploreTableViewCellSpec") {
             beforeEach {
